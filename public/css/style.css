@@ -1,0 +1,17 @@
+body {
+	padding-top: 50px;
+}
+
+.date-event {
+	font-size: 13px;
+	padding-right: 15px;
+	position: relative;
+	top: 25px;
+}
+
+.place-event {
+	font-size: 18px;
+	padding-left: 15px;
+	position: relative;
+	top: 40px;
+}

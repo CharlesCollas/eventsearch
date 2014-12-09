@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Assign our Angular module -->
+<html ng-app="eventsearch">
+<head>
+    <!-- Metas -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>EventSearch</title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <script src="js/ng-infinite-scroll.min.js"></script>
+    <script src="js/core.js"></script>
+    
+</head>
+<!-- Set the controller -->
+<body ng-controller="mainController" ng-init="formData.page=1">
+    <div class="container" style="height: 100%; padding-bottom: 50px;">
+
+        <!-- Header -->
+        <div class="jumbotron text-center">
+            <h1>Search events</h1>
+            <br />
+            <!-- Form to search events -->
+            <div id="todo-form" class="row">
+                <div class="col-sm-4 col-sm-offset-4 text-center">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-lg text-center" placeholder="Keywords" ng-model="formData.text"><br />
+                            <select class="form-control" ng-init="formData.context='future'" ng-model="formData.context">
+                              <option value="future">Future</option>
+                              <option value="past">Past</option>
+                            </select>
+                        </div>
+                        <input type="hidden" ng-model="formData.page" />
+                        <input type="hidden" ng-model="formData.previousearch" />
+                        <!-- search() will search events on Lanyrd -->
+                        <button type="submit" class="btn btn-primary btn-lg" ng-click="search()">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div infinite-scroll='search()' infinite-scroll-immediate-check='false'>
+            <!-- Loop over the events in $scope.events -->
+            <div ng-repeat="event in events">
+                <!-- Events list -->
+                <div id="events-list" class="row">
+                    <div class="col-sm-3">
+                        <i class="fa fa-calendar fa-4x" style="padding-top: 25px; float: right;"></i> <span class="date-event">{{ event.day }}<br />{{ event.datevent }}<br />{{ event.year }}</span>
+                    </div>
+                    <div class="col-sm-6">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h3 class="panel-title">{{ event.title }}</h3>
+                          </div>
+                          <div class="panel-body">
+                            <a href="{{ event.link }}" target="_blank">More information</a>
+                          </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <i class="fa fa-globe fa-4x" style="padding-top: 25px; float: left;"></i> <span class="place-event">{{ event.place }}</span>
+                    </div>
+                </div>
+                <div style='clear: both;'></div>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6" style="text-align: center;">
+                <h3>{{ information }}</h3>
+            </div>
+            <div class="col-sm-3">
+                <a href="#top"><span ng-bind-html-unsafe="scroll"></span></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("a[href='#top']").click(function() {
+          $("html, body").animate({ scrollTop: 0 }, "slow");
+          return false;
+        });
+    </script>
+
+</body>
+</html>
